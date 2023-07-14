@@ -12,13 +12,13 @@ const createBook = async (payload: IBook): Promise<IBook> => {
 };
 
 const getSingleBooks = async (id: string): Promise<IBook | null> => {
-  const result = await Book.findById(id).populate('seller');
+  const result = await Book.findById(id)
 
   return result;
 };
 
 const deleteBook = async (id: string): Promise<IBook | null> => {
-  const result = await Book.findByIdAndDelete(id).populate('seller');
+  const result = await Book.findByIdAndDelete(id)
 
   return result;
 };
@@ -29,7 +29,7 @@ const updateBook = async (
 ): Promise<IBook | null> => {
   const result = await Book.findOneAndUpdate({ _id: id }, payload, {
     new: true,
-  }).populate('seller');
+  })
   return result;
 };
 
@@ -122,7 +122,6 @@ const getALLBook = async (
     .sort(sortConditions)
     .skip(skip)
     .limit(limit)
-    .populate('seller');
 
   // .select({ price: 1, name: 1 });
 
