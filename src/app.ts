@@ -8,7 +8,7 @@ import GlobalHandler from './app/middlesWare/globalErrorHandler';
 
 import routes from './app/routes';
 import sendResponse from './shared/sendResponce';
-import { generateFacultyId } from './app/modules/users/user.utils';
+
 
 // import { createUser } from './app/modules/users/users.services'
 
@@ -28,17 +28,10 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/api/v1', routes);
 
 app.get('/', async (req: Request, res: Response) => {
-  //  const addUser = await createUser({id:"445",role:"admin",password:"asdfasdf"})
 
-  // res.send(addUser)
-  // throw new ApiError(400, 'Error from app.ts')
-  // Promise.reject(new Error('Unhandle Promise from app.ts'))
-
-  // throw new Error("Error from app.get")
-  // next("next error")
   sendResponse(res, {
     success: true,
-    message: 'Running the Bookserver',
+    message: 'Running the Book-store-server',
     statusCode: 201,
     data: null,
   });
@@ -62,18 +55,6 @@ app.use((req: Request, res: Response, next: NextFunction) => {
   next();
 });
 
-// for testing userId dynamic based on yaer and code ///
-// const academicSemester = {
-//   code: '01',
-//   year: '2025',
-// };
 
-const testId = async () => {
-  const testId = await generateFacultyId();
-
-  console.log(testId, 'testId from app.ts');
-};
-
-testId();
 
 export default app;

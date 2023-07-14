@@ -1,7 +1,7 @@
 import express from 'express';
 
 import validateRequest from '../../middlesWare/validateUserRequest';
-import { BookValidation } from './cows.validation';
+import { BookValidation } from './books.validation';
 import { BookController } from './book.controller';
 
 

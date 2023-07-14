@@ -9,6 +9,11 @@
             "date": 1689365813825,
             "name": "C:\\WEB\\NEXT_LEVEL_2\\assignment-5\\bookServer\\logs\\winston\\success\\ph-2023-07-15-02-success.log",
             "hash": "9f8a93cfd5fd3b181c32353aee66ac7f4a51f641f07796fe669674885df92222"
+        },
+        {
+            "date": 1689369552061,
+            "name": "C:\\WEB\\NEXT_LEVEL_2\\assignment-5\\bookServer\\logs\\winston\\success\\ph-2023-07-15-03-success.log",
+            "hash": "9dceeab2d4117debef830453e1058a0d1e6ac2c629a8348def884c9fa7991da8"
         }
     ],
     "hashType": "sha256"
