@@ -21,6 +21,10 @@ const bookSchema = new mongoose_1.Schema({
     publicationDate: {
         type: String,
         required: true
+    },
+    user: {
+        type: String,
+        required: true
     }
 }, {
     timestamps: true,

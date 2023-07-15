@@ -12,15 +12,24 @@ router.post(
   validateRequest(BookValidation.createBookZodSchema),
   BookController.createBook
 );
+
+
+router.get(
+  '/book',
+  BookController.getBook
+);
+
 router.get(
   '/:id',
   BookController.getSingleBook
 );
 
+
 router.get(
   '/',
   BookController.getALLBook
 );
+
 
 router.delete('/:id', BookController.deleteBook);
 router.patch(

@@ -6,9 +6,15 @@ import sendResponse from '../../../shared/sendResponce';
 import pick from '../../../shared/pick';
 import { BookService } from './book.services';
 import { IBook } from './book.interface';
+import { Book } from './book.model';
 const createBook = catchAsync(async (req: Request, res: Response) => {
-  const { ...BookData } = req.body;
-  const result = await  BookService.createBook(BookData);
+  const BookData = req.body;
+  console.log(
+    '🚀 ~ file: book.controller.ts:11 ~ createBook ~ BookData:',
+    BookData
+  );
+
+  const result = await BookService.createBook(BookData);
   sendResponse<IBook>(res, {
     statusCode: 200,
     success: true,
@@ -63,6 +69,18 @@ const updateBook = catchAsync(
 const BookFilterableFields = ['searchTerm', 'minPrice', 'maxPrice', 'location'];
 const paginationFields = ['page', 'limit', 'sortBy', 'sortOrder'];
 
+const getBook = catchAsync(async (req: Request, res: Response) => {
+  // console.log('bbbbbbbbbbbbbbbbbbb');
+
+  const result = await Book.find({});
+
+  res.status(200).json({
+    success: true,
+    statusCode: 200,
+    message: 'Books retrieved successfully ',
+    data: result,
+  });
+});
 const getALLBook = catchAsync(async (req: Request, res: Response) => {
   const filters = pick(req.query, BookFilterableFields);
   const paginationOptions = pick(req.query, paginationFields);
@@ -84,4 +102,5 @@ export const BookController = {
   updateBook,
   getSingleBook,
   deleteBook,
+  getBook,
 };
