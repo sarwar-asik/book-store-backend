@@ -5,22 +5,29 @@ import { IBook } from './book.interface';
 import { Book } from './book.model';
 import { IGenericPaginationResponse } from '../../../interfaces/ICommon';
 
-
 const createBook = async (payload: IBook): Promise<IBook> => {
   const result = await Book.create(payload);
   return result;
 };
 
 const getSingleBooks = async (id: string): Promise<IBook | null> => {
-  const result = await Book.findById(id)
+  const result = await Book.findById(id);
 
   return result;
 };
 
-const deleteBook = async (id: string): Promise<IBook | null> => {
-  const result = await Book.findByIdAndDelete(id)
+const deleteBook = async (id: string, email:string): Promise<Partial<IBook> | undefined | null> => {
+  console.log('🚀 ~ file: book.services.ts:20 ~ deleteBook ~ email:', email);
+  const matchBook = await Book.findById(id);
 
-  return result;
+  if (matchBook?.user === email) {
+    console.log(
+      '🚀 ~ file: book.services.ts:25 ~ deleteBook ~ matchBook:',
+      matchBook
+    );
+    const result = await Book.findByIdAndDelete(id);
+    return result;
+  }
 };
 
 const updateBook = async (
@@ -29,7 +36,7 @@ const updateBook = async (
 ): Promise<IBook | null> => {
   const result = await Book.findOneAndUpdate({ _id: id }, payload, {
     new: true,
-  })
+  });
   return result;
 };
 
@@ -121,7 +128,7 @@ const getALLBook = async (
   const result = await Book.find(whereConditions)
     .sort(sortConditions)
     .skip(skip)
-    .limit(limit)
+    .limit(limit);
 
   // .select({ price: 1, name: 1 });
 

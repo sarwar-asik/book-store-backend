@@ -10,6 +10,7 @@ const books_validation_1 = require("./books.validation");
 const book_controller_1 = require("./book.controller");
 const router = express_1.default.Router();
 router.post('/', (0, validateUserRequest_1.default)(books_validation_1.BookValidation.createBookZodSchema), book_controller_1.BookController.createBook);
+router.get('/book', book_controller_1.BookController.getBook);
 router.get('/:id', book_controller_1.BookController.getSingleBook);
 router.get('/', book_controller_1.BookController.getALLBook);
 router.delete('/:id', book_controller_1.BookController.deleteBook);

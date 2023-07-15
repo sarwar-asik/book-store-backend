@@ -25,6 +25,9 @@ const bookSchema = new mongoose_1.Schema({
     user: {
         type: String,
         required: true
+    },
+    reviews: {
+        type: [String]
     }
 }, {
     timestamps: true,

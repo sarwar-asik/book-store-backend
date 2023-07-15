@@ -39,15 +39,19 @@ const getSingleBook = catchAsync(async (req: Request, res: Response) => {
 
 const deleteBook = catchAsync(async (req: Request, res: Response) => {
   const id = req.params.id;
+  const email = req.query.email;
+  // console.log(id, email);
 
-  const result = await BookService.deleteBook(id);
+  const result = await BookService.deleteBook(id,email);
 
+ if(result){
   sendResponse(res, {
     statusCode: 200,
     success: true,
     message: 'Book deleted successfully !',
     data: result,
   });
+ }
 });
 
 const updateBook = catchAsync(
@@ -72,7 +76,7 @@ const paginationFields = ['page', 'limit', 'sortBy', 'sortOrder'];
 const getBook = catchAsync(async (req: Request, res: Response) => {
   // console.log('bbbbbbbbbbbbbbbbbbb');
 
-  const result = await Book.find({});
+  const result = await Book.find({}).sort({ createdAt: -1 }).limit(10);
 
   res.status(200).json({
     success: true,

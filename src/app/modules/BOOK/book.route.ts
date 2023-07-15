@@ -32,7 +32,7 @@ router.get(
 
 
 router.delete('/:id', BookController.deleteBook);
-router.patch(
+router.put(
   '/:id',
   validateRequest(BookValidation.updateBookZodSchema),
   BookController.updateBook

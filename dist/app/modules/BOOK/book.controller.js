@@ -17,6 +17,7 @@ const catchAsync_1 = __importDefault(require("../../../shared/catchAsync"));
 const sendResponce_1 = __importDefault(require("../../../shared/sendResponce"));
 const pick_1 = __importDefault(require("../../../shared/pick"));
 const book_services_1 = require("./book.services");
+const book_model_1 = require("./book.model");
 const createBook = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const BookData = req.body;
     console.log('🚀 ~ file: book.controller.ts:11 ~ createBook ~ BookData:', BookData);
@@ -63,6 +64,16 @@ const updateBook = (0, catchAsync_1.default)((0, catchAsync_1.default)((req, res
 //   with pagination ///
 const BookFilterableFields = ['searchTerm', 'minPrice', 'maxPrice', 'location'];
 const paginationFields = ['page', 'limit', 'sortBy', 'sortOrder'];
+const getBook = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    // console.log('bbbbbbbbbbbbbbbbbbb');
+    const result = yield book_model_1.Book.find({});
+    res.status(200).json({
+        success: true,
+        statusCode: 200,
+        message: 'Books retrieved successfully ',
+        data: result,
+    });
+}));
 const getALLBook = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const filters = (0, pick_1.default)(req.query, BookFilterableFields);
     const paginationOptions = (0, pick_1.default)(req.query, paginationFields);
@@ -81,4 +92,5 @@ exports.BookController = {
     updateBook,
     getSingleBook,
     deleteBook,
+    getBook,
 };
