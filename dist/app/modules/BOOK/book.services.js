@@ -30,9 +30,14 @@ const getSingleBooks = (id) => __awaiter(void 0, void 0, void 0, function* () {
     const result = yield book_model_1.Book.findById(id);
     return result;
 });
-const deleteBook = (id) => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield book_model_1.Book.findByIdAndDelete(id);
-    return result;
+const deleteBook = (id, email) => __awaiter(void 0, void 0, void 0, function* () {
+    console.log('🚀 ~ file: book.services.ts:20 ~ deleteBook ~ email:', email);
+    const matchBook = yield book_model_1.Book.findById(id);
+    if ((matchBook === null || matchBook === void 0 ? void 0 : matchBook.user) === email) {
+        console.log('🚀 ~ file: book.services.ts:25 ~ deleteBook ~ matchBook:', matchBook);
+        const result = yield book_model_1.Book.findByIdAndDelete(id);
+        return result;
+    }
 });
 const updateBook = (id, payload) => __awaiter(void 0, void 0, void 0, function* () {
     const result = yield book_model_1.Book.findOneAndUpdate({ _id: id }, payload, {

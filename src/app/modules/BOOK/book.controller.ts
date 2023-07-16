@@ -42,16 +42,16 @@ const deleteBook = catchAsync(async (req: Request, res: Response) => {
   const email = req.query.email;
   // console.log(id, email);
 
-  const result = await BookService.deleteBook(id,email);
+  const result = await BookService.deleteBook(id, email as string);
 
- if(result){
-  sendResponse(res, {
-    statusCode: 200,
-    success: true,
-    message: 'Book deleted successfully !',
-    data: result,
-  });
- }
+  if (result) {
+    sendResponse(res, {
+      statusCode: 200,
+      success: true,
+      message: 'Book deleted successfully !',
+      data: result,
+    });
+  }
 });
 
 const updateBook = catchAsync(
@@ -70,7 +70,7 @@ const updateBook = catchAsync(
 );
 
 //   with pagination ///
-const BookFilterableFields = ['searchTerm', 'minPrice', 'maxPrice', 'location'];
+const BookFilterableFields = ['searchTerm', 'title', 'genre', 'author'];
 const paginationFields = ['page', 'limit', 'sortBy', 'sortOrder'];
 
 const getBook = catchAsync(async (req: Request, res: Response) => {
@@ -100,6 +100,33 @@ const getALLBook = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+const postReviews = catchAsync(
+  catchAsync(async (req: Request, res: Response) => {
+    const bookId = req.params.id;
+    const review = req.body.comment;
+    const result = await BookService.postReview(bookId,review)
+    sendResponse(res, {
+      statusCode: 201,
+      success: true,
+      message: 'Book updated successfully',
+      data: result,
+    });
+  })
+);
+
+const getReview = catchAsync(async (req: Request, res: Response) => {
+  // console.log('bbbbbbbbbbbbbbbbbbb');
+
+  const result = await Book.find({}).sort({ createdAt: -1 }).limit(10);
+
+  res.status(200).json({
+    success: true,
+    statusCode: 200,
+    message: 'Books retrieved successfully ',
+    data: result,
+  });
+});
+
 export const BookController = {
   createBook,
   getALLBook,
@@ -107,4 +134,6 @@ export const BookController = {
   getSingleBook,
   deleteBook,
   getBook,
+  postReviews,
+  getReview
 };

@@ -42,13 +42,17 @@ const getSingleBook = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, 
 }));
 const deleteBook = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const id = req.params.id;
-    const result = yield book_services_1.BookService.deleteBook(id);
-    (0, sendResponce_1.default)(res, {
-        statusCode: 200,
-        success: true,
-        message: 'Book deleted successfully !',
-        data: result,
-    });
+    const email = req.query.email;
+    // console.log(id, email);
+    const result = yield book_services_1.BookService.deleteBook(id, email);
+    if (result) {
+        (0, sendResponce_1.default)(res, {
+            statusCode: 200,
+            success: true,
+            message: 'Book deleted successfully !',
+            data: result,
+        });
+    }
 }));
 const updateBook = (0, catchAsync_1.default)((0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
@@ -66,7 +70,7 @@ const BookFilterableFields = ['searchTerm', 'minPrice', 'maxPrice', 'location'];
 const paginationFields = ['page', 'limit', 'sortBy', 'sortOrder'];
 const getBook = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     // console.log('bbbbbbbbbbbbbbbbbbb');
-    const result = yield book_model_1.Book.find({});
+    const result = yield book_model_1.Book.find({}).sort({ createdAt: -1 }).limit(10);
     res.status(200).json({
         success: true,
         statusCode: 200,
