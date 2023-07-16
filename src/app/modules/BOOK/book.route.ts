@@ -4,7 +4,6 @@ import validateRequest from '../../middlesWare/validateUserRequest';
 import { BookValidation } from './books.validation';
 import { BookController } from './book.controller';
 
-
 const router = express.Router();
 
 router.post(
@@ -14,7 +13,6 @@ router.post(
 );
 router.post(
   '/Review/:id',
-  // validateRequest(BookValidation.createBookZodSchema),
   BookController.postReviews
 );
 
@@ -37,9 +35,6 @@ router.get(
   '/',
   BookController.getALLBook
 );
-
-
-
 router.delete('/:id', BookController.deleteBook);
 router.put(
   '/:id',

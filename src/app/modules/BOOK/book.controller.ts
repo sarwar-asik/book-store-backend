@@ -2,7 +2,6 @@
 import { Request, Response } from 'express';
 import catchAsync from '../../../shared/catchAsync';
 import sendResponse from '../../../shared/sendResponce';
-
 import pick from '../../../shared/pick';
 import { BookService } from './book.services';
 import { IBook } from './book.interface';
@@ -52,8 +51,7 @@ const deleteBook = catchAsync(async (req: Request, res: Response) => {
       data: result,
     });
   }
-});
-
+})
 const updateBook = catchAsync(
   catchAsync(async (req: Request, res: Response) => {
     const { id } = req.params;
@@ -104,10 +102,17 @@ const postReviews = catchAsync(
   catchAsync(async (req: Request, res: Response) => {
     const bookId = req.params.id;
     const review = req.body.review;
-    console.log("🚀 ~ file: book.controller.ts:107 ~ catchAsync ~ review:", review,bookId)
-    const result = await BookService.postReview(bookId,review)
-    console.log("🚀 ~ file: book.controller.ts:108 ~ catchAsync ~ result:", result)
-    
+    console.log(
+      '🚀 ~ file: book.controller.ts:107 ~ catchAsync ~ review:',
+      review,
+      bookId
+    );
+    const result = await BookService.postReview(bookId, review);
+    console.log(
+      '🚀 ~ file: book.controller.ts:108 ~ catchAsync ~ result:',
+      result
+    );
+
     sendResponse(res, {
       statusCode: 201,
       success: true,
@@ -121,7 +126,11 @@ const getReview = catchAsync(async (req: Request, res: Response) => {
   // console.log('bbbbbbbbbbbbbbbbbbb');
   const bookId = req.params.id;
 
-  const result = await Book.findById(bookId).select({"_id":1,"reviews":1,"title":1})
+  const result = await Book.findById(bookId).select({
+    _id: 1,
+    reviews: 1,
+    title: 1,
+  });
 
   res.status(200).json({
     success: true,
@@ -139,5 +148,5 @@ export const BookController = {
   deleteBook,
   getBook,
   postReviews,
-  getReview
+  getReview,
 };

@@ -66,7 +66,7 @@ const updateBook = (0, catchAsync_1.default)((0, catchAsync_1.default)((req, res
     });
 })));
 //   with pagination ///
-const BookFilterableFields = ['searchTerm', 'minPrice', 'maxPrice', 'location'];
+const BookFilterableFields = ['searchTerm', 'title', 'genre', 'author'];
 const paginationFields = ['page', 'limit', 'sortBy', 'sortOrder'];
 const getBook = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     // console.log('bbbbbbbbbbbbbbbbbbb');
@@ -90,6 +90,34 @@ const getALLBook = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, voi
         data: result.data,
     });
 }));
+const postReviews = (0, catchAsync_1.default)((0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const bookId = req.params.id;
+    const review = req.body.review;
+    console.log('🚀 ~ file: book.controller.ts:107 ~ catchAsync ~ review:', review, bookId);
+    const result = yield book_services_1.BookService.postReview(bookId, review);
+    console.log('🚀 ~ file: book.controller.ts:108 ~ catchAsync ~ result:', result);
+    (0, sendResponce_1.default)(res, {
+        statusCode: 201,
+        success: true,
+        message: 'Book updated successfully',
+        data: result,
+    });
+})));
+const getReview = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    // console.log('bbbbbbbbbbbbbbbbbbb');
+    const bookId = req.params.id;
+    const result = yield book_model_1.Book.findById(bookId).select({
+        _id: 1,
+        reviews: 1,
+        title: 1,
+    });
+    res.status(200).json({
+        success: true,
+        statusCode: 200,
+        message: 'Books retrieved successfully ',
+        data: result,
+    });
+}));
 exports.BookController = {
     createBook,
     getALLBook,
@@ -97,4 +125,6 @@ exports.BookController = {
     getSingleBook,
     deleteBook,
     getBook,
+    postReviews,
+    getReview,
 };

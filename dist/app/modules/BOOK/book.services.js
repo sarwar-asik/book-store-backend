@@ -54,7 +54,7 @@ const getALLBook = (filters, paginationOptions) => __awaiter(void 0, void 0, voi
     const skip = (page - 1) * limit;
     const sortBy = paginationOptions.sortBy || 'createdAt';
     const sortOrder = paginationOptions.sortOrder || 'desc';
-    const BookSearchableFields = ['minPrice', 'maxPrice', 'location'];
+    const BookSearchableFields = ['title', 'genre', 'author'];
     const andConditions = [];
     if (searchTerm) {
         andConditions.push({
@@ -66,32 +66,6 @@ const getALLBook = (filters, paginationOptions) => __awaiter(void 0, void 0, voi
             })),
         });
     }
-    // if (Object.keys(filtersData).length) {
-    //   andConditions.push({
-    //     $and: Object.entries(filtersData).map(([field, value]) => ({
-    //       [field]: value,
-    //     })),
-    //   });
-    // }
-    // if (Object.keys(filtersData).length) {
-    //   andConditions.push({
-    //     $and: Object.entries(filtersData).map(([field, value]) => {
-    //       const fieldName =
-    //         field === 'minPrice' || field === 'maxPrice' ? 'price' : field;
-    //       const NewValue =
-    //         field === 'minPrice' || field === 'maxPrice'
-    //           ? parseInt(value)
-    //           : value;
-    //       if (field === 'minPrice') {
-    //         return { [fieldName]: { $gt: NewValue } };
-    //       }
-    //       if (field === 'maxPrice') {
-    //         return { [fieldName]: { $lt: NewValue } };
-    //       }
-    //       return { [fieldName]: value };
-    //     }),
-    //   });
-    // }
     const sortConditions = {};
     if (sortBy && sortOrder) {
         sortConditions[sortBy] = sortOrder;
@@ -112,10 +86,17 @@ const getALLBook = (filters, paginationOptions) => __awaiter(void 0, void 0, voi
         data: result,
     };
 });
+const postReview = (id, reviewData) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield book_model_1.Book.findOneAndUpdate({ _id: id }, { $push: { reviews: reviewData } }, {
+        new: true,
+    });
+    return result;
+});
 exports.BookService = {
     createBook,
     getSingleBooks,
     deleteBook,
     updateBook,
     getALLBook,
+    postReview
 };
