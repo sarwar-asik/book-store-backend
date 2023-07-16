@@ -12,8 +12,16 @@ router.post(
   validateRequest(BookValidation.createBookZodSchema),
   BookController.createBook
 );
+router.post(
+  '/Review/:id',
+  // validateRequest(BookValidation.createBookZodSchema),
+  BookController.postReviews
+);
 
-
+router.get(
+  '/Review/:id',
+  BookController.getReview
+);
 router.get(
   '/book',
   BookController.getBook
@@ -29,6 +37,7 @@ router.get(
   '/',
   BookController.getALLBook
 );
+
 
 
 router.delete('/:id', BookController.deleteBook);

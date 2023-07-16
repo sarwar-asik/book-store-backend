@@ -103,8 +103,11 @@ const getALLBook = catchAsync(async (req: Request, res: Response) => {
 const postReviews = catchAsync(
   catchAsync(async (req: Request, res: Response) => {
     const bookId = req.params.id;
-    const review = req.body.comment;
+    const review = req.body.review;
+    console.log("🚀 ~ file: book.controller.ts:107 ~ catchAsync ~ review:", review,bookId)
     const result = await BookService.postReview(bookId,review)
+    console.log("🚀 ~ file: book.controller.ts:108 ~ catchAsync ~ result:", result)
+    
     sendResponse(res, {
       statusCode: 201,
       success: true,
@@ -116,8 +119,9 @@ const postReviews = catchAsync(
 
 const getReview = catchAsync(async (req: Request, res: Response) => {
   // console.log('bbbbbbbbbbbbbbbbbbb');
+  const bookId = req.params.id;
 
-  const result = await Book.find({}).sort({ createdAt: -1 }).limit(10);
+  const result = await Book.findById(bookId).select({"_id":1,"reviews":1,"title":1})
 
   res.status(200).json({
     success: true,
